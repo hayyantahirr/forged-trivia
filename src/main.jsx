@@ -1,7 +1,9 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
+
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./screens/Home";
+import Layout from "./Layout";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +18,5 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  
-    <RouterProvider router={router} />
-  
+  <RouterProvider router={router} />
 );
