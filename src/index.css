@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+* {
+  /* border: 1px solid red; */
+
+  box-sizing: border-box;
+}
+
 #root {
   min-height: 100vh;
-  background-color: #05090B;
+  background-color: #05090b;
   color: #ffffffd4;
   position: relative;
   overflow: hidden; /* hides any gradient overflow */
