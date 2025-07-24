@@ -104,17 +104,34 @@ const Home = () => {
           </h1>
           <p className="text-xl text-[#da7e36] opacity-70">
             {/* Intro paragraph */}
-            Take the challenge and prove your knowledge!
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum nam
+            nobis quos in suscipit commodi quam explicabo itaque atque at
+            consequuntur neque ut, non vitae modi facilis, corporis mollitia
+            tenetur! Ipsa corrupti non sunt quasi laborum fuga, hic voluptate
+            rerum vel culpa laudantium alias, nisi excepturi dicta tempore natus
+            rem, cumque dolore! Maxime odit asperiores porro voluptates, optio
+            tenetur placeat! Recusandae, possimus. In libero magnam ipsam,
+            tempore esse sapiente dolore sint itaque, eaque quas quibusdam
+            nobis, nihil odit expedita quam obcaecati veritatis accusamus
+            mollitia. Exercitationem sapiente temporibus iusto! Tenetur,
+            laborum? Perspiciatis fugiat unde labore omnis impedit quisquam
+            officiis nemo! Doloremque enim ipsum, aliquid accusamus ducimus
+            omnis provident vitae sed? Magnam illo similique quas sunt et
+            aspernatur reprehenderit exercitationem architecto in. Saepe totam
+            tenetur quod neque rerum .
           </p>
         </div>
 
         <div className="flex flex-col w-[60%] mx-auto border  p-5 mb-5 rounded-xl  border-orange-500 shadow-[0_0_15px_2px_rgba(255,115,0,0.3)]  bg-[#0a0a0a] text-white">
-          <div>
-            <h1 className="text-end text-2xl mr-5 text-[#da7e36] font-sans font-black mb-5">
-              Result {result} / {totalMarks}
+          <div className="flex justify-between ">
+            <h1 className="text-xl font-sans font-black">
+              <span className="text-2xl mr-5 text-[#da7e36] font-sans font-black mb-5">
+                Time Taken :{" "}
+              </span>{" "}
+              {formatTime(timer)}
             </h1>
-            <h1>
-              <span>Time Taken : </span> {formatTime(timer)}
+            <h1 className=" text-2xl mr-5 text-[#da7e36] font-sans font-black mb-5">
+              Result {result} / {totalMarks}
             </h1>
           </div>
 
@@ -154,7 +171,7 @@ const Home = () => {
                 </span>
                 {questions[currentIndex].difficulty}
               </h1>
-              <div>
+              <div className="flex items-center">
                 <button
                   onClick={nextQuestion}
                   className="relative inline-block p-px font-semibold leading-6 text-white bg-gray-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 ml-3 mb-5"
@@ -187,9 +204,12 @@ const Home = () => {
                 {quizEnded && (
                   <button
                     onClick={restartQuiz}
-                    className="px-6 py-3 bg-[#da7e36] text-white font-bold rounded-xl shadow-lg hover:bg-orange-600 transition-all duration-300"
+                    className="cursor-pointer relative px-9 py-2 bg-black text-white font-semibold rounded-lg border-2 border-purple-500 hover:border-purple-400 transition-all duration-300 hover:shadow-[0_0_20px_10px_rgba(168,85,247,0.6)] active:scale-95 active:shadow-[0_0_10px_5px_rgba(168,85,247,0.4)] group ml-6 mb-5"
                   >
-                    Restart Quiz
+                    <span className="flex items-center space-x-2">
+                      <span>restart</span>
+                    </span>
+                    <span class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500/20 to-indigo-500/20"></span>
                   </button>
                 )}
               </div>
