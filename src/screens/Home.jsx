@@ -104,21 +104,11 @@ const Home = () => {
           </h1>
           <p className="text-xl text-[#da7e36] opacity-70">
             {/* Intro paragraph */}
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum nam
-            nobis quos in suscipit commodi quam explicabo itaque atque at
-            consequuntur neque ut, non vitae modi facilis, corporis mollitia
-            tenetur! Ipsa corrupti non sunt quasi laborum fuga, hic voluptate
-            rerum vel culpa laudantium alias, nisi excepturi dicta tempore natus
-            rem, cumque dolore! Maxime odit asperiores porro voluptates, optio
-            tenetur placeat! Recusandae, possimus. In libero magnam ipsam,
-            tempore esse sapiente dolore sint itaque, eaque quas quibusdam
-            nobis, nihil odit expedita quam obcaecati veritatis accusamus
-            mollitia. Exercitationem sapiente temporibus iusto! Tenetur,
-            laborum? Perspiciatis fugiat unde labore omnis impedit quisquam
-            officiis nemo! Doloremque enim ipsum, aliquid accusamus ducimus
-            omnis provident vitae sed? Magnam illo similique quas sunt et
-            aspernatur reprehenderit exercitationem architecto in. Saepe totam
-            tenetur quod neque rerum .
+            Welcome to our exciting quiz app where knowledge meets speed! Dive
+            into a variety of thought-provoking questions across multiple
+            categories. Track your performance with a live timer, score points
+            for every correct answer, and challenge yourself to complete the
+            quiz before time runs out. Sharpen your mind and have fun learning!
           </p>
         </div>
 
