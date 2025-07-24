@@ -10,6 +10,7 @@ const Home = () => {
   const [timer, setTimer] = useState(0); // time in seconds
   const [quizEnded, setQuizEnded] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState([]);
+  const [hasStarted, setHasStarted] = useState(false);
 
   // Fetch questions
   useEffect(() => {
@@ -24,14 +25,14 @@ const Home = () => {
   // Timer
   useEffect(() => {
     let interval = null;
-    if (!quizEnded) {
+    if (hasStarted && !quizEnded) {
       interval = setInterval(() => {
         setTimer((prev) => prev + 1);
       }, 1000);
     }
 
     return () => clearInterval(interval);
-  }, [quizEnded]);
+  }, [hasStarted, quizEnded]);
 
   // Shuffle options once per question
   useEffect(() => {
@@ -77,6 +78,22 @@ const Home = () => {
     }
   };
 
+  const restartQuiz = () => {
+    setQuestions(null);
+    setCurrentIndex(0);
+    setTotalMarks(0);
+    setResult(0);
+    setTimer(0);
+    setQuizEnded(false);
+    setHasStarted(false);
+
+    axios("https://the-trivia-api.com/v2/questions")
+      .then((res) => {
+        setQuestions(res.data);
+        setTotalMarks(res.data.length * 10);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
       <main>
@@ -118,6 +135,11 @@ const Home = () => {
                       value={item}
                       name="pixel-choice"
                       className="cursor-pointer"
+                      onChange={() => {
+                        if (!hasStarted) {
+                          setHasStarted(true);
+                        }
+                      }}
                     />
                     <label htmlFor="" className="label-text ">
                       {item}
@@ -132,36 +154,45 @@ const Home = () => {
                 </span>
                 {questions[currentIndex].difficulty}
               </h1>
-
-              <button
-                onClick={nextQuestion}
-                className="relative inline-block p-px font-semibold leading-6 text-white bg-gray-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 ml-3 mb-5"
-              >
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-                <span className="relative z-10 block px-6 py-3 rounded-xl bg-gray-950">
-                  <div className="relative z-10 flex items-center space-x-2">
-                    <span className="transition-all duration-500 group-hover:translate-x-1">
-                      {currentIndex < questions.length - 1
-                        ? "Next Question"
-                        : "Finish"}
-                    </span>
-                    <svg
-                      className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        clipRule="evenodd"
-                        d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 
+              <div>
+                <button
+                  onClick={nextQuestion}
+                  className="relative inline-block p-px font-semibold leading-6 text-white bg-gray-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 ml-3 mb-5"
+                >
+                  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+                  <span className="relative z-10 block px-6 py-3 rounded-xl bg-gray-950">
+                    <div className="relative z-10 flex items-center space-x-2">
+                      <span className="transition-all duration-500 group-hover:translate-x-1">
+                        {currentIndex < questions.length - 1
+                          ? "Next Question"
+                          : "Finish"}
+                      </span>
+                      <svg
+                        className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          clipRule="evenodd"
+                          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 
                           4.25a.75.75 0 0 1 0 1.06l-4.25 
                           4.25a.75.75 0 0 1-1.06-1.06L11.94 
                           10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                        fillRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </span>
-              </button>
+                          fillRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </button>
+                {quizEnded && (
+                  <button
+                    onClick={restartQuiz}
+                    className="px-6 py-3 bg-[#da7e36] text-white font-bold rounded-xl shadow-lg hover:bg-orange-600 transition-all duration-300"
+                  >
+                    Restart Quiz
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <h1>Loading...</h1>
