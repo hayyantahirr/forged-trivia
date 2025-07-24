@@ -7,6 +7,8 @@ const Home = () => {
   const [totalMarks, setTotalMarks] = useState(0);
   const [result, setResult] = useState(0);
   const selectedOptionRef = useRef();
+  const [timer, setTimer] = useState(0); // time in seconds
+  const [quizEnded, setQuizEnded] = useState(false);
 
   useEffect(() => {
     axios("https://the-trivia-api.com/v2/questions")
@@ -28,6 +30,23 @@ const Home = () => {
 
     return newArr;
   }
+  // Timer
+  useEffect(() => {
+    let interval;
+
+    if (!quizEnded) {
+      interval = setInterval(() => {
+        setTimer((prevTime) => prevTime + 1);
+      }, 1000); // 1 second
+    }
+
+    return () => clearInterval(interval);
+  }, [quizEnded]);
+  const formatTime = (seconds) => {
+    const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const secs = String(seconds % 60).padStart(2, "0");
+    return `${mins}:${secs}`;
+  };
 
   //   // next question
   const nextQuestion = () => {
@@ -47,6 +66,7 @@ const Home = () => {
       setCurrentIndex(currentIndex + 1);
     } else {
       console.log("question khtm");
+      setQuizEnded(true);
     }
   };
   return (
@@ -70,9 +90,14 @@ const Home = () => {
           </p>
         </div>
         <div className="flex flex-col w-[60%] mx-auto border  p-5 mb-5 rounded-xl  border-orange-500 shadow-[0_0_15px_2px_rgba(255,115,0,0.3)]  bg-[#0a0a0a] text-white">
-          <h1 className="text-end text-2xl mr-5 text-[#da7e36] font-sans font-black mb-5">
-            Result {result} / {totalMarks}
-          </h1>
+          <div>
+            <h1 className="text-end text-2xl mr-5 text-[#da7e36] font-sans font-black mb-5">
+              Result {result} / {totalMarks}
+            </h1>
+            <h1>
+              <span>Time Left : </span> {formatTime(timer)}
+            </h1>
+          </div>
           {questions ? (
             <div>
               <h1 className="text-l flex items-center ml-1">
@@ -105,7 +130,12 @@ const Home = () => {
                 })}
               </ul>
 
-              <h1><span className="text-[#da7e36] font-sans font-black px-3 text-xl">Difficulty :</span>  {questions[currentIndex].difficulty}</h1>
+              <h1 className="mb-5 text-xl">
+                <span className="text-[#da7e36] font-sans font-black px-3 text-xl">
+                  Difficulty :
+                </span>
+                {questions[currentIndex].difficulty}
+              </h1>
 
               <button
                 onClick={nextQuestion}
